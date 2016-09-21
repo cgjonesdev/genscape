@@ -1,5 +1,7 @@
 # Django settings for bowling project.
 
+import os
+
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
@@ -11,8 +13,8 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': '',                      # Or path to database file if using sqlite3.
+        'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': 'genscape.db',                      # Or path to database file if using sqlite3.
         # The following settings are not used with sqlite3:
         'USER': '',
         'PASSWORD': '',
@@ -85,13 +87,6 @@ STATICFILES_FINDERS = (
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '+%@)4by2)##f#9-)6&^jx5u!py#oba-$cshx%04*mmxv7-wigp'
 
-# List of callables that know how to import templates from various sources.
-TEMPLATE_LOADERS = (
-    'django.template.loaders.filesystem.Loader',
-    'django.template.loaders.app_directories.Loader',
-#     'django.template.loaders.eggs.Loader',
-)
-
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -108,10 +103,39 @@ ROOT_URLCONF = 'bowling.urls'
 WSGI_APPLICATION = 'bowling.wsgi.application'
 
 TEMPLATE_DIRS = (
+    '/Users/cary/.virtualenvs/genscape/lib/python2.7/site-packages/rest_framework/templates',
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
 )
+
+TEMPLATES = [{
+    'BACKEND': 'django.template.backends.django.DjangoTemplates',
+    'APP_DIRS': True,
+}]
+
+# Added `TEMPLATES` dict due to a warning stating, "The standalone TEMPLATE_*
+# settings were deprecated in Django 1.8 and the TEMPLATES dictionary takes
+# precedence", but adding it threw the following traceback:
+# ImproperlyConfigured: Unknown parameters: TEMPLATE_DIRS, TEMPLATE_DEBUG, TEMPLATE_LOADERS
+
+# TEMPLATES = [{
+#     'BACKEND': 'django.template.backends.django.DjangoTemplates',
+#     'APP_DIRS': True,
+#     # List of callables that know how to import templates from various sources.
+#     'TEMPLATE_LOADERS': (
+#         'django.template.loaders.filesystem.Loader',
+#         'django.template.loaders.app_directories.Loader',
+#     #     'django.template.loaders.eggs.Loader',
+#     ),
+#     'TEMPLATE_DIRS': (
+#         '/Users/cary/.virtualenvs/genscape/lib/python2.7/site-packages/rest_framework/templates',
+#         # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
+#         # Always use forward slashes, even on Windows.
+#         # Don't forget to use absolute paths, not relative paths.
+#     ),
+#     'TEMPLATE_DEBUG': DEBUG
+# }]
 
 INSTALLED_APPS = (
     'django.contrib.auth',
@@ -120,6 +144,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'scoring',
     'rest_framework',
     # Uncomment the next line to enable the admin:
     # 'django.contrib.admin',
@@ -154,4 +179,11 @@ LOGGING = {
             'propagate': True,
         },
     }
+}
+
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer',
+    )
 }
