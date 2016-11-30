@@ -1,0 +1,72 @@
+
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="style.css">
+    </head>
+    <body>
+        <h1>Genscape</h1>
+<p><center><h2>Bowling Scoring API</h2></center></p>
+<blockquote>
+<p>An API to score the game of bowling.</p>
+</blockquote>
+<h3>Setup</h3>
+<ol>
+<li><a href="http://virtualenvwrapper.readthedocs.io/en/latest/install.html">Create and activate a python virtualenv</a>.</li>
+<li><a href="http://www.django-rest-framework.org/#installation">Install Django Rest Framework</a>.</li>
+<li>Clone the bowling project: <code>git@github.com:cgjonesdev/genscape.git</code>.</li>
+<li>Prep the database:<ol>
+<li><code>python manage.py makemigrations scoring</code></li>
+<li><code>python manage.py migrate</code></li>
+</ol>
+</li>
+<li>Start the development web server<ol>
+<li><code>python manage.py runserver</code></li>
+</ol>
+</li>
+</ol>
+<h3>Create a Player</h3>
+<ol>
+<li>Navigate to the <code>/players</code> endpoint of the api<ol>
+<li>In a browser, enter <code>localhost:8000/players</code>.</li>
+<li>Enter only the name of a player and click the <code>POST</code> button.</li>
+</ol>
+</li>
+</ol>
+<blockquote>
+<p>The other parameters can be set, but will affect the game. These were set to read-only in the serializers module initially, but prevented the user from viewing the score as they bowl, so they were set back to editable.</p>
+</blockquote>
+<h3>Start Bowling</h3>
+<ol>
+<li>
+<p>Navigate to the <code>/players/1/bowl</code> endpoint.</p>
+<blockquote>
+<p>The player will have thrown their first roll. You can see the score for the first roll for frame #1. Number of knocked pins for each roll is random unless a query string is used.</p>
+</blockquote>
+</li>
+<li>
+<p>To continue bowling, hit refresh on the browser and watch the score tally up and the frames advance.</p>
+</li>
+</ol>
+<h4>To Set the Number of Knocked Down Pins</h4>
+<blockquote>
+<p>To see how the API handles scoring for strikes and spares (instead of waiting for them to randomly come up), add a querystring</p>
+</blockquote>
+<h5>Examples:</h5>
+<ul>
+<li>Strike:<ul>
+<li>First roll: <code>/players/1/bowl/?first_roll=10</code></li>
+</ul>
+</li>
+<li>Spare:<ul>
+<li>First and second roll: <code>/players/1/bowl/?first_roll=7&amp;second_roll=3</code></li>
+</ul>
+</li>
+<li>First roll only: <code>/players/1/bowl/?first_roll=7</code></li>
+<li>Second roll only: <code>/players/1/bowl/?second_roll=5</code></li>
+</ul>
+<h3>Stats</h3>
+<blockquote>
+<p>Each players all-time-score and number of games bowled is recorded</p>
+</blockquote><br><br><br>
+    </body>
+</html>
